@@ -1,6 +1,7 @@
 """Runs the program CFM-ID in a dockerized environment
 
-Copyright (c) 2022 to present Koen van Ingen, Mitja M. Zdouc, PhD and individual contributors.
+Copyright (c) 2022 to present Koen van Ingen, Mitja M. Zdouc, PhD and individual
+ contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,29 +33,31 @@ class CfmidManager(BaseModel):
 
     Attributes:
         prepped_cfmid_file: Path of input file containing metabolite name, SMILES.
-        output_folder: Path of cfm-id output folder where it will create 1 fragmentation spectrum file per metabolite
-        prune_probability: Probability below which metabolite fragments will be excluded from predictions
+        cfm_id_folder: Path of cfm-id output folder where it will create 1 fragmentation
+         spectrum file per metabolite
+        prune_probability: Probability below which metabolite fragments will be excluded
+         from predictions
+        niceness: Niceness value to run the CFM-ID analysis in.
 
     Raise:
         pydantic.ValidationError: Pydantic validation failed during instantiation.
     """
 
     prepped_cfmid_file: str
-    output_folder: str
+    cfm_id_folder: str
     prune_probability: str
+    niceness: str
 
     def run_program(self: Self):
-        """Builds and executes the command to run CFM-ID in dockerized environment using nice -16"""
+        """Builds and executes the command to run CFM-ID in dockerized environment
+        using nice -16"""
         command = (
-            "nice -16 docker run --rm=true -v $(pwd):/cfmid/public/ -i wishartlab/cfmid:latest "
-            + 'sh -c "cd /cfmid/public/; cfm-predict '
-            + self.prepped_cfmid_file
-            + " "
-            + self.prune_probability
-            + " "
-            + "/trained_models_cfmid4.0/[M+H]+/param_output.log "
-            + "/trained_models_cfmid4.0/[M+H]+/param_config.txt 1 "
-            + self.output_folder
-            + '"'
+            f"nice -{self.niceness} docker run --rm=true"
+            f" -v $(pwd):/cfmid/public/ -i wishartlab/cfmid:latest sh -c"
+            f' "cd /cfmid/public/; cfm-predict {self.prepped_cfmid_file}'
+            f" {self.prune_probability} "
+            f"/trained_models_cfmid4.0/[M+H]+/param_output.log"
+            f" /trained_models_cfmid4.0/[M+H]+/param_config.txt 1"
+            f' {self.cfm_id_folder}"'
         )
         run(command, shell=True, executable="/bin/bash")

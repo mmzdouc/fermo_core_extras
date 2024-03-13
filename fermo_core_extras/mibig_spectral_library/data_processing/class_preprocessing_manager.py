@@ -1,6 +1,7 @@
 """Processes a folder of all MIBiG entries and outputs 2 space delimited .csv files.
 
-Copyright (c) 2022 to present Koen van Ingen, Mitja M. Zdouc, PhD and individual contributors.
+Copyright (c) 2022 to present Koen van Ingen, Mitja M. Zdouc, PhD and individual
+ contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +36,10 @@ class PreprocessingManager(BaseModel):
 
     Attributes:
         prepped_cfmid_file: Path of output file containing metabolite name, SMILES.
-        prepped_metadata_file: Path of output file containing metabolite name, SMILES, chemical formula,
-        molecular mass, database IDs, MIBiG entry ID.
-        bgc_dict: Dictionary with metabolite_name as key and metadata in a list as values: SMILES, chemical formula,
-        molecular mass, database IDs, MIBiG entry ID.
+        prepped_metadata_file: Path of output file containing metabolite name, SMILES,
+         chemical formula, molecular mass, database IDs, MIBiG entry ID.
+        bgc_dict: Dictionary with metabolite_name as key and metadata in a list as
+         values: SMILES, chemical formula, molecular mass, database IDs, MIBiG entry ID.
 
     Raise:
         pydantic.ValidationError: Pydantic validation failed during instantiation.
@@ -100,14 +101,16 @@ class PreprocessingManager(BaseModel):
 
     @staticmethod
     def extract_filenames(folder_path, extension):
-        """Extracts the filenames of all files from a certain extension in a folder and returns them in a list
+        """Extracts the filenames of all files from a certain extension in a folder and
+         returns them in a list
 
         Attributes:
             folder_path: Path to the folder containing the files.
             extension: File extension in str format like ".str"
 
         Returns:
-            files_list: List of all file paths in the folder meeting the extension criteria
+            files_list: List of all file paths in the folder meeting the extension
+             criteria
         """
         files_list = []
         folder = Path(folder_path)
