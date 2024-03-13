@@ -76,10 +76,7 @@ class PostprocessingManager(BaseModel):
             for linenr in range(len(lines)):
                 if (
                     lines[linenr].startswith("#PMass")
-                    and filename.strip(".log")
-                    .strip(self.output_folder)
-                    .strip("\\")
-                    .strip("/")
+                    and (metabolite := filename.removesuffix(".log").removeprefix(self.output_folder).strip("\/"))
                     in self.metadata.keys()
                 ):
                     lines = (
@@ -87,10 +84,7 @@ class PostprocessingManager(BaseModel):
                         + [
                             "MIBIGACCESSION="
                             + self.metadata[
-                                filename.strip(".log")
-                                .strip(self.output_folder)
-                                .strip("\\")
-                                .strip("/")
+                                metabolite
                             ]["MIBiG ID"]
                             + "\n",
                         ]
@@ -106,6 +100,7 @@ class PostprocessingManager(BaseModel):
             with open(file_name, "r") as file:
                 _subroutine(file_name)
 
+
     def format_log_dict(self: Self):
         """Formats the .log files in log_dict to an .mgf like format in preprocessed_mgf_list."""
 
@@ -113,44 +108,46 @@ class PostprocessingManager(BaseModel):
             new_lines = []
             for line in lines:
                 if not line.startswith("energy"):
-                    if not line.startswith("\n"):
+                    if line.startswith("\n"):
+                        break
+                    else:
                         new_lines.append(line)
 
             for linenr in range(len(new_lines)):
                 if new_lines[linenr].startswith("#In-silico"):
                     new_lines[
                         linenr
-                    ] = f'INSILICO={lines[linenr][10:].replace(" ", "")}\n'
+                    ] = f'INSILICO={lines[linenr][10:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#PREDICTED BY"):
                     new_lines[
                         linenr
-                    ] = f'PREDICTEDBY={lines[linenr][13:].replace(" ", "")}\n'
+                    ] = f'PREDICTEDBY={lines[linenr][13:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#ID="):
-                    new_lines[linenr] = f'ID={lines[linenr][4:].replace(" ", "")}\n'
+                    new_lines[linenr] = f'ID={lines[linenr][4:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#SMILES="):
-                    new_lines[linenr] = f'SMILES={lines[linenr][8:].replace(" ", "")}\n'
+                    new_lines[linenr] = f'SMILES={lines[linenr][8:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#InChiKey="):
                     new_lines[
                         linenr
-                    ] = f'INCHIKEY={lines[linenr][10:].replace(" ", "")}\n'
+                    ] = f'INCHIKEY={lines[linenr][10:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#Formula="):
                     new_lines[
                         linenr
-                    ] = f'FORMULA={lines[linenr][9:].replace(" ", "")}\n'
+                    ] = f'FORMULA={lines[linenr][9:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#PMass="):
-                    new_lines[linenr] = f'PMASS={lines[linenr][7:].replace(" ", "")}\n'
+                    new_lines[linenr] = f'PEPMASS={lines[linenr][7:].replace(" ", "")}'
 
             entry_list = []
             for line in new_lines:
                 entries = line.replace("\n", "").split(" ")
                 entry_list.append(entries)
-            print(entry_list)
+
             self.preprocessed_mgf_list.append(entry_list)
 
     def write_mgf_to_file(self: Self):
