@@ -57,16 +57,15 @@ class PostprocessingManager(BaseModel):
         """Extracts the relevant metadata from the metadata .csv file and
         adds a new entry to self_metadata for every metabolite found.
         """
-        with open(self.prepped_metadata_file, "r") as file:
-            for line in file:
-                metadata_table = line.strip("\n").split(" ")
-                self.metadata[metadata_table[0]] = {
-                    "SMILES": metadata_table[1],
-                    "chemical formula": metadata_table[2],
-                    "molecular mass": metadata_table[3],
-                    "database ID": metadata_table[4],
-                    "MIBiG ID": metadata_table[5],
-                }
+        metadata_table = pd.read_csv(self.prepped_metadata_file, sep=" ")
+        for entry in metadata_table.iterrows():
+            self.metadata[entry[1][0]] = {
+                "SMILES": entry[1][1],
+                "chemical formula": entry[1][2],
+                "molecular mass": entry[1][3],
+                "database ID": entry[1][4],
+                "MIBiG ID": entry[1][5],
+            }
 
     def add_metadata_cfmid_files(self: Self, file_list):
         """Adds the missing metadata to all files in the CFM-ID output folder and saves result in log_dict."""
@@ -76,16 +75,18 @@ class PostprocessingManager(BaseModel):
             for linenr in range(len(lines)):
                 if (
                     lines[linenr].startswith("#PMass")
-                    and (metabolite := filename.removesuffix(".log").removeprefix(self.output_folder).strip("\/"))
+                    and (
+                        metabolite := filename.removesuffix(".log")
+                        .removeprefix(self.output_folder)
+                        .strip("\\/")
+                    )
                     in self.metadata.keys()
                 ):
                     lines = (
                         lines[0 : linenr + 1]
                         + [
                             "MIBIGACCESSION="
-                            + self.metadata[
-                                metabolite
-                            ]["MIBiG ID"]
+                            + self.metadata[metabolite]["MIBiG ID"]
                             + "\n",
                         ]
                         + lines[linenr + 1 :]
@@ -99,7 +100,6 @@ class PostprocessingManager(BaseModel):
         for file_name in file_list:
             with open(file_name, "r") as file:
                 _subroutine(file_name)
-
 
     def format_log_dict(self: Self):
         """Formats the .log files in log_dict to an .mgf like format in preprocessed_mgf_list."""
@@ -136,9 +136,7 @@ class PostprocessingManager(BaseModel):
                     ] = f'INCHIKEY={lines[linenr][10:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#Formula="):
-                    new_lines[
-                        linenr
-                    ] = f'FORMULA={lines[linenr][9:].replace(" ", "")}'
+                    new_lines[linenr] = f'FORMULA={lines[linenr][9:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#PMass="):
                     new_lines[linenr] = f'PEPMASS={lines[linenr][7:].replace(" ", "")}'
