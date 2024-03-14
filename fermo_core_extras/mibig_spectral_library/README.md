@@ -9,7 +9,7 @@ Download, Installation
 - Install and activate docker in a linux environment.
 - Download the MIBiG database in .json format from this [link](https://mibig.secondarymetabolites.org/) and
 unpack it to a convenient location.
-- Navigate to mibig_preprocessing
+- Execute main.py from the mibig_spectral_library folder
 
 Usage
 ====
@@ -20,31 +20,22 @@ Identification (CFM-ID). This is very computationally intensive and will take se
 recommended if one wants to run the genomics module of FERMO as a command line tool.
 
 All the steps in this pipeline can be run through the following command:
-`python main.py all_cfm_id <mibig_folder> smiles_metabolites.txt metadata_metabolites.csv cfm_id_output 0.001
-spectral_library.mgf`
 
-Additionally, the steps within this pipeline can also be run separately. It is split into preprocessing of the
-MIBiG database, calculation of MS/MS spectra and generation of the spectral library .mgf file using CFM-ID output
-and metadata from MIBiG:
+`python main.py --input <mibig_folder> --output <output_folder>`
 
-Preprocessing:
-`python main.py preprocessing <mibig_folder> smiles_metabolites.txt metadata_metabolites.csv`
-
-Prediction of MS/MS spectra, needs linux environment with docker:
-`python main.py cfm_id smiles_metabolites.txt cfm_id_output 0.001`
-
-Postprocessing:
-`python main.py metadata cfm_id_output metadata_metabolites.csv spectral_library.mgf`
+Additionally, the following parameters can be added:
+- `--prune < 1-0 >` Peak pruning threshold below which CFM-ID will ignore peaks, default = 0.001 with CFM-ID skipping peaks lower than 0.1% abundance.
+- `--niceness < 0-20 >` Resource prioritization parameter used by nice in the CFM-ID fragmentation prediction, default = 16 with 20 being lowest priority and 0 being equal to most other running processes on the machine.
+- `--level <logging_level>` Lowest logging level to display. Choices: DEBUG, INFO, WARNING, ERROR, CRITICAL.
 
 Data compatability
 =====
 
 - Input data for the MIBiG preprocessing step must be a folder of .json files following the structure of MIBiG.
-- Input data for CFM-ID must be a space delimited .txt file containing metabolites, SMILES.
-- Float parameter for CFM-ID peak pruning must be from 0-1.
 
 Background
 ====
+(Link to bachelor thesis later)
 
 Natural products, also known as secondary or specialized metabolites, are small molecules produced by living organisms.
 Usually, natural products are not required for the organisms survival but often grant an evolutionary advantage
