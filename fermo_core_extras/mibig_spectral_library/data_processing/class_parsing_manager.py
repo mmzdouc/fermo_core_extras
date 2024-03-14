@@ -70,11 +70,16 @@ class ParsingManager:
             default="16",
             required=False,
         )
-
+        parser.add_argument(
+            "-l",
+            "--level",
+            help="Sets logging level for console and log file output. Default=INFO",
+            default="INFO",
+            required=False,
+        )
         args = parser.parse_args(commandline_args)
         args_dict = {}
         for arg_name, arg_value in vars(args).items():
-            if arg_name != "mode":
-                args_dict[arg_name] = arg_value
+            args_dict[arg_name] = arg_value
 
         return args_dict

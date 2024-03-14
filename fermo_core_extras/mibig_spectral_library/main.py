@@ -31,6 +31,7 @@ from data_processing.class_cfmid_manager import CfmidManager
 from data_processing.class_preprocessing_manager import PreprocessingManager
 from data_processing.class_postprocessing_manager import PostprocessingManager
 from data_processing.class_parsing_manager import ParsingManager
+from data_processing.class_logger import Logger
 
 
 class LibraryPrep(BaseModel):
@@ -41,6 +42,7 @@ class LibraryPrep(BaseModel):
         output_folder: Path of the output folder containing intermediate files and the .mgf MIBiG spectral library
         prune: Probability below which metabolite fragments will be excluded from predictions.
         niceness: Niceness value to run the CFM-ID analysis in.
+        level: Logging level that will be used in the library
 
     Raise:
         pydantic.ValidationError: Pydantic validation failed during instantiation.
@@ -50,11 +52,11 @@ class LibraryPrep(BaseModel):
     output_folder: str
     prune: str
     niceness: str
+    level: str
 
     def process_mibig(self: Self):
         """Processes the .json files from MIBiG into input for CFM-ID and
         metadata file."""
-        print("Processing the .json files from MIBiG into input for CFM-ID")
         args_dict = {
             "prepped_cfmid_file": f"{self.output_folder}/cfm_id_input.txt",
             "prepped_metadata_file": f"{self.output_folder}/mibig_metadata.csv",
@@ -93,21 +95,41 @@ class LibraryPrep(BaseModel):
         metadata.format_log_dict()
         metadata.write_mgf_to_file()
 
-    @staticmethod
-    def run_library_prep():
-        data.process_mibig()
-        data.run_cfmid()
-        data.run_metadata()
-
     def make_output_folder(self: Self):
         """Check for the existence of the output folder and makes one if required"""
         if not os.path.isdir(self.output_folder):
             os.makedirs(self.output_folder)
 
+    def run_logger(self: Self):
+        """Enables colored logging throughout the mibig_spectral_library pipeline
+
+        Returns:
+            logger: Logger instance that writes to terminal and spectral_library_creator.log in s_output
+        """
+        args_dict = {"logging_level": self.level, "output_folder": self.output_folder}
+        logging = Logger(**args_dict)
+        logger = logging.enable_logging()
+        return logger
+
+    @staticmethod
+    def run_library_prep():
+        """Drives the MIBiG spectral library pipeline and enables logging"""
+        data.make_output_folder()
+        logger = data.run_logger()
+
+        logger.info("Extracting metabolites and metadata from the MIBiG folder")
+        data.process_mibig()
+
+        logger.info("Started CFM-ID ms/ms spectra prediction for MIBiG entries")
+        data.run_cfmid()
+        logger.info("CFM-ID ms/ms spectra prediction completed")
+
+        logger.info("Adding metadata to CFM-ID output and generating .mgf file")
+        data.run_metadata()
+        logger.info("All actions completed successfully")
+
 
 if __name__ == "__main__":
     arguments_dictionary = ParsingManager.run_parser(argv[1:])
     data = LibraryPrep(**arguments_dictionary)
-    data.make_output_folder()
     data.run_library_prep()
-    print("All actions completed successfully!")
