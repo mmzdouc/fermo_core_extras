@@ -33,7 +33,7 @@ class PostprocessingManager(BaseModel):
      from preprocessing_manager.py
 
     Attributes:
-        output_folder: Path of cfm-id output folder where it will create 1 fragmentation
+        cfm_id_folder: Path of cfm-id output folder where it will create 1 fragmentation
          spectrum file per
         metabolite.
         prepped_metadata_file: Path of parsing_manager output file containing metabolite
@@ -78,38 +78,33 @@ class PostprocessingManager(BaseModel):
         result in log_dict."""
 
         def _subroutine(filename):
-            lines = file.readlines()
-            for linenr in range(len(lines)):
-                if (
-                    lines[linenr].startswith("#PMass")
-                    and (
-                        metabolite := filename.removesuffix(".log")
-                        .removeprefix(self.cfm_id_folder)
-                        .strip("\\/")
-                    )
-                    in self.metadata.keys()
-                ):
-                    lines = (
-                        lines[0 : linenr + 1]
-                        + [
-                            "MIBIGACCESSION="
-                            + self.metadata[metabolite]["MIBiG ID"]
-                            + "\n",
-                        ]
-                        + lines[linenr + 1 :]
-                    )
-
-                    break
-            self.log_dict[
+            metabolite = (
                 filename.removesuffix(".log")
                 .removeprefix(self.cfm_id_folder)
-                .strip("\\")
-                .strip("/")
-            ] = lines
+                .strip("\\/")
+            )
+            return metabolite
 
         for file_name in file_list:
             with open(file_name, "r") as file:
-                _subroutine(file_name)
+                lines = file.readlines()
+                metabolite = _subroutine(file_name)
+                for linenr in range(len(lines)):
+                    if (
+                        lines[linenr].startswith("#PMass")
+                        and metabolite in self.metadata.keys()
+                    ):
+                        lines = (
+                            lines[0 : linenr + 1]
+                            + [
+                                "MIBIGACCESSION="
+                                + self.metadata[metabolite]["MIBiG ID"]
+                                + "\n",
+                            ]
+                            + lines[linenr + 1 :]
+                        )
+
+                self.log_dict[metabolite] = lines
 
     def format_log_dict(self: Self):
         """Formats the .log files in log_dict to an .mgf like format in
