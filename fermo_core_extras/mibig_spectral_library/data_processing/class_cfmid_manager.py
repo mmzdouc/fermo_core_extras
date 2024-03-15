@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from subprocess import run
+import subprocess
 from typing import Self
 
 from pydantic import BaseModel
@@ -48,9 +48,13 @@ class CfmidManager(BaseModel):
     prune_probability: str
     niceness: str
 
-    def run_program(self: Self):
+    def run_program(self: Self, logger):
         """Builds and executes the command to run CFM-ID in dockerized environment
-        using nice -16"""
+        using nice -16
+
+        Arguments:
+            logger: Logger instance that writes to terminal and spectral_library_creator.log in s_output
+        """
         command = (
             f"nice -{self.niceness} docker run --rm=true"
             f" -v $(pwd):/cfmid/public/ -i wishartlab/cfmid:latest sh -c"
@@ -60,4 +64,10 @@ class CfmidManager(BaseModel):
             f" /trained_models_cfmid4.0/[M+H]+/param_config.txt 1"
             f' {self.cfm_id_folder}"'
         )
-        run(command, shell=True, executable="/bin/bash")
+        process = subprocess.Popen(
+            command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        )
+        for line in iter(process.stdout.readline, b""):
+            logger.debug(line.decode().strip())
+
+        process.communicate()

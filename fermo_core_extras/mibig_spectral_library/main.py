@@ -72,9 +72,13 @@ class LibraryPrep(BaseModel):
             preprocessed_data.extract_metadata(file_path)
         preprocessed_data.write_outfiles()
 
-    def run_cfmid(self: Self):
+    def run_cfmid(self: Self, logger):
         """Builds and executes the command to run CFM-ID in dockerized environment
-        using nice -16"""
+        using nice -16
+
+        Arguments:
+            logger: Logger instance that writes to terminal and spectral_library_creator.log in s_output
+        """
         args_dict = {
             "prepped_cfmid_file": str(
                 Path(self.output_folder).joinpath("cfm_id_input.txt")
@@ -86,7 +90,7 @@ class LibraryPrep(BaseModel):
             "niceness": self.niceness,
         }
         spectra = CfmidManager(**args_dict)
-        spectra.run_program()
+        spectra.run_program(logger)
 
     def run_metadata(self: Self):
         """Adds real mass, publication IDs and MIBiG cluster IDs to CFM-ID output."""
@@ -136,7 +140,7 @@ class LibraryPrep(BaseModel):
         data.process_mibig()
 
         logger.info("Started CFM-ID ms/ms spectra prediction for MIBiG entries")
-        data.run_cfmid()
+        data.run_cfmid(logger)
         logger.info("CFM-ID ms/ms spectra prediction completed")
 
         logger.info("Adding metadata to CFM-ID output and generating .mgf file")
