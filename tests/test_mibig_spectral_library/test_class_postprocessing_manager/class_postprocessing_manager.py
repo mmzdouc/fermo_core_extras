@@ -101,10 +101,7 @@ class PostprocessingManager(BaseModel):
 
                     break
             self.log_dict[
-                filename.removesuffix(".log")
-                .removeprefix(self.cfm_id_folder)
-                .strip("\\")
-                .strip("/")
+                filename.strip(".log").strip(self.cfm_id_folder).strip("\\").strip("/")
             ] = lines
 
         for file_name in file_list:
