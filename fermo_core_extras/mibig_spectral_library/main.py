@@ -24,6 +24,7 @@ SOFTWARE.
 from typing import Self
 from sys import argv
 import os
+from pathlib import Path
 
 from pydantic import BaseModel
 
@@ -58,8 +59,12 @@ class LibraryPrep(BaseModel):
         """Processes the .json files from MIBiG into input for CFM-ID and
         metadata file."""
         args_dict = {
-            "prepped_cfmid_file": f"{self.output_folder}/cfm_id_input.txt",
-            "prepped_metadata_file": f"{self.output_folder}/mibig_metadata.csv",
+            "prepped_cfmid_file": str(
+                Path(self.output_folder).joinpath("cfm_id_input.txt")
+            ),
+            "prepped_metadata_file": str(
+                Path(self.output_folder).joinpath("mibig_metadata.csv")
+            ),
         }
         preprocessed_data = PreprocessingManager(**args_dict)
         file_list = preprocessed_data.extract_filenames(self.input, ".json")
@@ -71,8 +76,12 @@ class LibraryPrep(BaseModel):
         """Builds and executes the command to run CFM-ID in dockerized environment
         using nice -16"""
         args_dict = {
-            "prepped_cfmid_file": f"{self.output_folder}/cfm_id_input.txt",
-            "cfm_id_folder": f"{self.output_folder}/cfm_id_predicted_spectra",
+            "prepped_cfmid_file": str(
+                Path(self.output_folder).joinpath("cfm_id_input.txt")
+            ),
+            "cfm_id_folder": str(
+                Path(self.output_folder).joinpath("cfm_id_predicted_spectra")
+            ),
             "prune_probability": self.prune,
             "niceness": self.niceness,
         }
@@ -82,9 +91,15 @@ class LibraryPrep(BaseModel):
     def run_metadata(self: Self):
         """Adds real mass, publication IDs and MIBiG cluster IDs to CFM-ID output."""
         args_dict = {
-            "cfm_id_folder": f"{self.output_folder}/cfm_id_predicted_spectra",
-            "prepped_metadata_file": f"{self.output_folder}/mibig_metadata.csv",
-            "mgf_file": f"{self.output_folder}/mibig_spectral_library.mgf",
+            "cfm_id_folder": str(
+                Path(self.output_folder).joinpath("cfm_id_predicted_spectra")
+            ),
+            "prepped_metadata_file": str(
+                Path(self.output_folder).joinpath("mibig_metadata.csv")
+            ),
+            "mgf_file": str(
+                Path(self.output_folder).joinpath("mibig_spectral_library.mgf")
+            ),
         }
         metadata = PostprocessingManager(**args_dict)
         file_list = PreprocessingManager.extract_filenames(
