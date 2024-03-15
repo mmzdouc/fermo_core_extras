@@ -78,12 +78,12 @@ class PostprocessingManager(BaseModel):
         result in log_dict."""
 
         def _subroutine(filename):
-            metabolite = (
+            metabolite_name = (
                 filename.removesuffix(".log")
                 .removeprefix(self.cfm_id_folder)
                 .strip("\\/")
             )
-            return metabolite
+            return metabolite_name
 
         for file_name in file_list:
             with open(file_name, "r") as file:
