@@ -14,10 +14,11 @@ unpack it to a convenient location.
 Usage
 ====
 
-This module for is used to prepare a spectral tandem mass spectrometry (MS/MS) library from all entries in the Minimum
+Currently, this module **only** has support for **linux**.
+It is used to prepare a spectral tandem mass spectrometry (MS/MS) library from all entries in the Minimum
 Information about a Biosynthetic Gene cluster (MIBiG) by using Competitive Fragmentation Modeling for Metabolite
 Identification (CFM-ID). This is very computationally intensive and will take several days, as such it is only
-recommended if one wants to run the genomics module of FERMO as a command line tool.
+recommended if one wants to run the genomics module of FERMO as a command line tool and one wants to generate his own spectral library.
 
 All the steps in this pipeline can be run through the following command:
 
