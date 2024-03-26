@@ -40,10 +40,11 @@ class LibraryPrep(BaseModel):
 
     Attributes:
         input: Path of the mibig.json folder containing .json files.
-        output_folder: Path of the output folder containing intermediate files and the .mgf MIBiG spectral library
+        output_folder: Path of the output folder containing intermediate files and the .mgf MIBiG spectral library.
         prune: Probability below which metabolite fragments will be excluded from predictions.
         niceness: Niceness value to run the CFM-ID analysis in.
-        level: Logging level that will be used in the library
+        level: Logging level that will be used in the library.
+        mass_threshold: Threshold for maximum peptide mass.
 
     Raise:
         pydantic.ValidationError: Pydantic validation failed during instantiation.
@@ -54,6 +55,7 @@ class LibraryPrep(BaseModel):
     prune: str
     niceness: str
     level: str
+    mass_threshold: int
 
     def process_mibig(self: Self):
         """Processes the .json files from MIBiG into input for CFM-ID and
@@ -65,6 +67,7 @@ class LibraryPrep(BaseModel):
             "prepped_metadata_file": str(
                 Path(self.output_folder).joinpath("mibig_metadata.csv")
             ),
+            "mass_threshold": self.mass_threshold,
         }
         preprocessed_data = PreprocessingManager(**args_dict)
         file_list = preprocessed_data.extract_filenames(self.input, ".json")

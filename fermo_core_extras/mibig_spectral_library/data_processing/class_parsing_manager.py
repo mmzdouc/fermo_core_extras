@@ -77,6 +77,13 @@ class ParsingManager:
             default="INFO",
             required=False,
         )
+        parser.add_argument(
+            "-m",
+            "--mass_threshold",
+            help="Sets a maximum molar mass threshold. CFM-ID can't analyse extremely large molecules. Default=2000",
+            default=2000,
+            required=False,
+        )
         args = parser.parse_args(commandline_args)
         args_dict = {}
         for arg_name, arg_value in vars(args).items():

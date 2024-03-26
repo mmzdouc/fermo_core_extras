@@ -38,6 +38,7 @@ class PreprocessingManager(BaseModel):
         prepped_cfmid_file: Path of output file containing metabolite name, SMILES.
         prepped_metadata_file: Path of output file containing metabolite name, SMILES,
          chemical formula, molecular mass, database IDs, MIBiG entry ID.
+        mass_threshold: Threshold for maximum peptide mass.
         bgc_dict: Dictionary with metabolite_name as key and metadata in a list as
          values: SMILES, chemical formula, molecular mass, database IDs, MIBiG entry ID.
 
@@ -48,13 +49,13 @@ class PreprocessingManager(BaseModel):
 
     prepped_cfmid_file: str
     prepped_metadata_file: str
+    mass_threshold: int
     bgc_dict: Optional[Dict] = {}
 
     def extract_metadata(self: Self, file_path: str):
         """Extracts the relevant metadata from a .json file and
         adds a new entry to bgc_dict for every metabolite found.
         """
-
         with open(file_path) as file:
             complete_bgc_dict = json.load(file)
             for metabolite in complete_bgc_dict["cluster"]["compounds"]:
@@ -71,7 +72,10 @@ class PreprocessingManager(BaseModel):
                 else:
                     metadata_table.append("")
                 if "mol_mass" in metabolite.keys():
-                    metadata_table.append(metabolite["mol_mass"])
+                    if int(metabolite["mol_mass"]) < self.mass_threshold:
+                        metadata_table.append(metabolite["mol_mass"])
+                    else:
+                        continue
                 else:
                     metadata_table.append("")
                 if "database_id" in metabolite.keys():
