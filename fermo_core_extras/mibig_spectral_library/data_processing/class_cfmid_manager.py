@@ -64,6 +64,7 @@ class CfmidManager(BaseModel):
             f" /trained_models_cfmid4.0/[M+H]+/param_config.txt 1"
             f' {self.cfm_id_folder}"'
         )
+        logger.debug(f"running docker with the following command:{command}")
         process = subprocess.Popen(
             command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
