@@ -69,6 +69,6 @@ class CfmidManager(BaseModel):
             command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
         for line in iter(process.stdout.readline, b""):
-            logger.debug(line.decode().strip())
+            logger.info(line.decode().strip())
 
         process.communicate()
