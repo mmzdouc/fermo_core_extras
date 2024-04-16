@@ -28,6 +28,7 @@ Additionally, the following parameters can be added:
 - `--prune < 1-0 >` Peak pruning threshold below which CFM-ID will ignore peaks, default = 0.001 with CFM-ID skipping peaks lower than 0.1% abundance.
 - `--niceness < 0-20 >` Resource prioritization parameter used by nice in the CFM-ID fragmentation prediction, default = 16 with 20 being lowest priority and 0 being equal to most other running processes on the machine.
 - `--level <logging_level>` Lowest logging level to display. Choices: DEBUG, INFO, WARNING, ERROR, CRITICAL.
+- `--mass_threshold <molecular mass>` Maximum molecular mass that will be accepted for CFM-ID spectra generation.
 
 Data compatability
 =====
@@ -36,34 +37,9 @@ Data compatability
 
 Background
 ====
-(Link to bachelor thesis later)
 
-Natural products, also known as secondary or specialized metabolites, are small molecules produced by living organisms.
-Usually, natural products are not required for the organisms survival but often grant an evolutionary advantage
-due to their remarkable biological properties, such as antibiotic activities. Therefore, secondary metabolites see many
-uses in the fields of medicine and agriculture. Traditionally, these compounds were found by performing bioactivity
-assays with consecutive isolation and characterisation. However, these natural products are not uniformly distributed
-in nature. Some are very common, while others might be so rare to be only expressed in one out of a million organisms
-or might only be expressed in combination with other organisms and specific growth medium. To find any new natural
-products at those odds, techniques for rapid and thorough analysis are required. These techniques in turn will result
-in a very high amount of data and therefore, computational support is needed to filter the many unimportant molecules,
-such as molecules without biological activity or already known secondary metabolites, from the few that are worth
-manual inspection for possible further research.
-FERMO offers a solution to this problem of secondary metabolite selection. This tool allows in silico selection and
-identification of promising candidate molecules from liquid chromatography mass spectrometry (LC-MS) data. LC-MS is an
-analytical technique for quick detection and analysis of metabolites. FERMO then facilitates the selection of these
-metabolites in a convenient web-based interface and currently has several options of filtering the metabolites that
-are likely linked to biological activity.
-
-This software package could be made even better by incorporating antiSMASH results.  AntiSMASH is a tool
-for predicting biosynthetic gene clusters (BGC) within the genome of a natural product producer. Usually, these BGC
-encode for secondary metabolites, and it is possible to compare predicted BGC against the MIBiG database to obtain
-the possible metabolites they encode. If in silico MS/MS spectra can be predicted for the metabolites in the MIBiG
-database, these can then be used to annotate the detected BGCs with the experimental LC-MS data.
-
-To accomplish this, a new module for the generation of a spectral library of all MIBiG entries will be made. Secondly,
-the main fermo module will need to be modified to allow for the automated comparison between experimental and MIBiG
-predicted spectra.
+This MIBiG spectral library pipeline, and it's integration into FERMO, are part of my bachelor
+thesis. For more information please see the thesis document itself by clicking [here](https://docs.google.com/document/d/1xI45phm3QL6TreeioFiGqSCpSK543esEdKW_mCkF4Ww/edit?usp=sharing) (Available from May 16th 2024)
 
 For developers
 ==============
