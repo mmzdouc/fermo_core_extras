@@ -60,14 +60,14 @@ class ParsingManager:
             "--prune",
             help="Pruning threshold for CFM-ID. Values between 1 and 0. Default=0.001",
             required=False,
-            default="0.001",
+            default=0.001,
         )
         parser.add_argument(
             "-n",
             "--niceness",
             help="Set resource demand for CFM-ID using nice. "
             "Value between 20 and 0 with 0 being the most demanding. Default=16",
-            default="16",
+            default=16,
             required=False,
         )
         parser.add_argument(

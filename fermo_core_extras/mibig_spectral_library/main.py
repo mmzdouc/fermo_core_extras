@@ -52,8 +52,8 @@ class LibraryPrep(BaseModel):
 
     input: str
     output_folder: str
-    prune: str
-    niceness: str
+    prune: float
+    niceness: int
     level: str
     mass_threshold: int
 
@@ -83,11 +83,9 @@ class LibraryPrep(BaseModel):
             logger: Logger instance that writes to terminal and spectral_library_creator.log in s_output
         """
         args_dict = {
-            "prepped_cfmid_file": str(
-                Path(self.output_folder).joinpath("cfm_id_input.txt")
-            ),
-            "cfm_id_folder": str(
-                Path(self.output_folder).joinpath("cfm_id_predicted_spectra")
+            "prepped_cfmid_file": Path(self.output_folder).joinpath("cfm_id_input.txt"),
+            "cfm_id_folder": Path(self.output_folder).joinpath(
+                "cfm_id_predicted_spectra"
             ),
             "prune_probability": self.prune,
             "niceness": self.niceness,

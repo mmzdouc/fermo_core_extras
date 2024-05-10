@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from pathlib import Path
 import subprocess
 from typing import Self
 
@@ -43,10 +44,10 @@ class CfmidManager(BaseModel):
         pydantic.ValidationError: Pydantic validation failed during instantiation.
     """
 
-    prepped_cfmid_file: str
-    cfm_id_folder: str
-    prune_probability: str
-    niceness: str
+    prepped_cfmid_file: Path
+    cfm_id_folder: Path
+    prune_probability: float
+    niceness: int
 
     def run_program(self: Self, logger):
         """Builds and executes the command to run CFM-ID in dockerized environment
@@ -58,11 +59,11 @@ class CfmidManager(BaseModel):
         command = (
             f"nice -{self.niceness} docker run --rm=true"
             f" -v $(pwd):/cfmid/public/ -i wishartlab/cfmid:latest sh -c"
-            f' "cd /cfmid/public/; cfm-predict {self.prepped_cfmid_file}'
+            f' "cd /cfmid/public/; cfm-predict {str(self.prepped_cfmid_file)}'
             f" {self.prune_probability} "
             f"/trained_models_cfmid4.0/[M+H]+/param_output.log"
             f" /trained_models_cfmid4.0/[M+H]+/param_config.txt 1"
-            f' {self.cfm_id_folder}"'
+            f' {str(self.cfm_id_folder)}"'
         )
         logger.debug(f"running docker with the following command:{command}")
         process = subprocess.Popen(
