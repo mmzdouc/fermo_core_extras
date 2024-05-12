@@ -55,8 +55,6 @@ We recommend using the package `pre-commit` to run these tools before committing
 Besides, we use type hinting and document code using Google-style docstrings.
 A convenient tool to check documentation style is `pycodestyle`.
 
-We use [Semantic Versioning](http://semver.org/) for versioning.
-
 About
 =====
 
@@ -71,5 +69,5 @@ MIT license (see [LICENSE](../../LICENSE))
 Authors
 =======
 
-- Koen van Ingen (bachelor student Molecular Life Sciences, Wageningen University)
+- Koen van Ingen (bachelor student Molecular Life Sciences at Wageningen University)
 - Mitja M. Zdouc (Wageningen University)
