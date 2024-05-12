@@ -24,7 +24,7 @@ SOFTWARE.
 
 from pathlib import Path
 import json
-from typing import Self, Dict, Optional
+from typing import Self, Dict
 
 import pandas as pd
 from pydantic import BaseModel
@@ -50,7 +50,7 @@ class PreprocessingManager(BaseModel):
     prepped_cfmid_file: str
     prepped_metadata_file: str
     mass_threshold: int
-    bgc_dict: Optional[Dict] = {}
+    bgc_dict: Dict = {}
 
     def extract_metadata(self: Self, file_path: str):
         """Extracts the relevant metadata from a .json file and

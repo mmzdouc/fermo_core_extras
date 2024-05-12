@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Self, List, Dict, Optional
+from typing import Self, List, Dict
 
 from pydantic import BaseModel
 import pandas as pd
@@ -55,9 +55,9 @@ class PostprocessingManager(BaseModel):
     cfm_id_folder: str
     prepped_metadata_file: str
     mgf_file: str
-    metadata: Optional[Dict] = {}
-    log_dict: Optional[Dict] = {}
-    preprocessed_mgf_list: Optional[List] = []
+    metadata: Dict = {}
+    log_dict: Dict = {}
+    preprocessed_mgf_list: List = []
 
     def extract_metadata(self: Self):
         """Extracts the relevant metadata from the metadata .csv file and
