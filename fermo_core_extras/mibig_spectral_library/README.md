@@ -5,21 +5,22 @@ Download, Installation
 
 - Create a virtual environment (e.g. with `conda`)
 - Install `python 3.11.4`
-- Install `fermo_core` with `pip install -e .` (while in the `fermo_core` directory)
+- Install `fermo_core_extras` with `pip install -e .` (while in the base `fermo_core_extras` directory)
 - Install and activate docker in a linux environment.
 - Download the MIBiG database in .json format from this [link](https://mibig.secondarymetabolites.org/) and
 unpack it to a convenient location.
 - Execute main.py from the mibig_spectral_library folder
 
+Background
+====
+
+This MIBiG spectral library pipeline is very computationally intensive and will take several days to calculate. This project is part of my bachelor
+thesis. For more information please see the thesis document itself by clicking [here](https://docs.google.com/document/d/1xI45phm3QL6TreeioFiGqSCpSK543esEdKW_mCkF4Ww/edit?usp=sharing) (Available from May 16th 2024)
+
 Usage
 ====
 
 Currently, this module **only** has support for **linux**.
-It is used to prepare a spectral tandem mass spectrometry (MS/MS) library from all entries in the Minimum
-Information about a Biosynthetic Gene cluster (MIBiG) by using Competitive Fragmentation Modeling for Metabolite
-Identification (CFM-ID). This is very computationally intensive and will take several days, as such it is only
-recommended if one wants to run the genomics module of FERMO as a command line tool and one wants to generate his own spectral library.
-
 All the steps in this pipeline can be run through the following command:
 
 `python main.py --input <mibig_folder> --output <output_folder>`
@@ -35,17 +36,11 @@ Data compatability
 
 - Input data for the MIBiG preprocessing step must be a folder of .json files following the structure of MIBiG.
 
-Background
-====
-
-This MIBiG spectral library pipeline, and it's integration into FERMO, are part of my bachelor
-thesis. For more information please see the thesis document itself by clicking [here](https://docs.google.com/document/d/1xI45phm3QL6TreeioFiGqSCpSK543esEdKW_mCkF4Ww/edit?usp=sharing) (Available from May 16th 2024)
-
 For developers
 ==============
 
 For guidelines regarding contributing to this project, see
-[CONTRIBUTING](CONTRIBUTING.md).
+[CONTRIBUTING](../../CONTRIBUTING.md).
 
 Install development dependencies with `pip install -e '.[dev]'`.
 
@@ -62,23 +57,19 @@ A convenient tool to check documentation style is `pycodestyle`.
 
 We use [Semantic Versioning](http://semver.org/) for versioning.
 
-Slow-running unit tests can be conditionally disabled using the decorator
-`@pytest.mark.slow`. To also run slow tests, use `pytest --runslow`. `Pre-commit`
-also runs all tests.
-
 About
 =====
 
 ## Dependencies
 
-A list of dependencies can be found in the file [pyproject.toml](pyproject.toml).
+A list of dependencies can be found in the file [pyproject.toml](../../pyproject.toml).
 
 ## License
 
-MIT license (see [LICENSE](LICENSE.md))
+MIT license (see [LICENSE](../../LICENSE))
 
 Authors
 =======
 
-- Mitja M. Zdouc (Wageningen University)
 - Koen van Ingen (bachelor student Molecular Life Sciences, Wageningen University)
+- Mitja M. Zdouc (Wageningen University)
