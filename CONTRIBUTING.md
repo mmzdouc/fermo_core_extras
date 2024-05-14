@@ -1,8 +1,7 @@
 # Contributing to [fermo_core_extras]
 
 Thank you for your interest in contributing to [fermo_core_extras]! Please take a 
-moment to
-read this document to understand how you can contribute.
+moment to read this document to understand how you can contribute.
 
 ## Preamble
 
@@ -18,10 +17,11 @@ please follow it in all your interactions with the project.
    - `git clone git@github.com:mmzdouc/fermo_core_extras.git`
 3. Create a new branch for your contribution:
    - `git checkout -b feature/your-feature-name`
-4. Install the package, its requirements, and the developer requirements:
-   - `pip install -e '.[dev]'`
+4. Install the package, its requirements, and the developer requirements. A python 
+   installation is required - see the `pyproject.toml`
+   - `poetry install --with dev`
 5. Install `pre-commit` which applies formatting and code testing before every commit:
-   - `pre-commit install`
+   - `poetry run pre-commit install`
 6. Make your changes and keep track of them in the [CHANGELOG.md] file.
 7. Before committing the changes, increase the version number in [pyproject.toml].
 8. Commit your changes to your branch:
