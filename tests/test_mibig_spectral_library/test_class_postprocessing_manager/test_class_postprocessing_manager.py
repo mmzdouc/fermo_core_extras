@@ -1,6 +1,6 @@
 import pytest
 
-from mibig_spectral_library.data_processing.class_postprocessing_manager import (
+from fermo_core_extras.mibig_spectral_library.data_processing.class_postprocessing_manager import (
     PostprocessingManager,
 )
 
