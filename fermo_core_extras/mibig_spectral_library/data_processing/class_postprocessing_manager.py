@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Self, List, Dict
+from typing import Dict, List, Self
 
-from pydantic import BaseModel
 import pandas as pd
+from pydantic import BaseModel
 
 
 class PostprocessingManager(BaseModel):
@@ -121,14 +121,14 @@ class PostprocessingManager(BaseModel):
 
             for linenr in range(len(new_lines)):
                 if new_lines[linenr].startswith("#In-silico"):
-                    new_lines[
-                        linenr
-                    ] = f'INSILICO={lines[linenr][10:].replace(" ", "")}'
+                    new_lines[linenr] = (
+                        f'INSILICO={lines[linenr][10:].replace(" ", "")}'
+                    )
 
                 if new_lines[linenr].startswith("#PREDICTED BY"):
-                    new_lines[
-                        linenr
-                    ] = f'PREDICTEDBY={lines[linenr][13:].replace(" ", "")}'
+                    new_lines[linenr] = (
+                        f'PREDICTEDBY={lines[linenr][13:].replace(" ", "")}'
+                    )
 
                 if new_lines[linenr].startswith("#ID="):
                     new_lines[linenr] = f'ID={lines[linenr][4:].replace(" ", "")}'
@@ -137,9 +137,9 @@ class PostprocessingManager(BaseModel):
                     new_lines[linenr] = f'SMILES={lines[linenr][8:].replace(" ", "")}'
 
                 if new_lines[linenr].startswith("#InChiKey="):
-                    new_lines[
-                        linenr
-                    ] = f'INCHIKEY={lines[linenr][10:].replace(" ", "")}'
+                    new_lines[linenr] = (
+                        f'INCHIKEY={lines[linenr][10:].replace(" ", "")}'
+                    )
 
                 if new_lines[linenr].startswith("#Formula="):
                     new_lines[linenr] = f'FORMULA={lines[linenr][9:].replace(" ", "")}'

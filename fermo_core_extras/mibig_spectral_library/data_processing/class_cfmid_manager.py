@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from pathlib import Path
 import subprocess
+from pathlib import Path
 from typing import Self
 
 from pydantic import BaseModel

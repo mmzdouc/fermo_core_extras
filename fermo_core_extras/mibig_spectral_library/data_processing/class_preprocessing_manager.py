@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from pathlib import Path
 import json
-from typing import Self, Dict
+from pathlib import Path
+from typing import Dict, Self
 
 import pandas as pd
 from pydantic import BaseModel
