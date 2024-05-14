@@ -12,3 +12,13 @@ repos:
       entry: poetry run isort
       language: system
       types: [file, python]
+    - id: ruff-check
+      name: ruff-check
+      entry: poetry run ruff check
+      language: system
+      types: [ file, python ]
+    - id: pytest
+      name: pytest
+      entry: poetry run pytest tests/
+      language: system
+      types: [ file, python ]

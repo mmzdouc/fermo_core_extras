@@ -59,11 +59,11 @@ class CfmidManager(BaseModel):
         command = (
             f"nice -{self.niceness} docker run --rm=true"
             f" -v $(pwd):/cfmid/public/ -i wishartlab/cfmid:latest sh -c"
-            f' "cd /cfmid/public/; cfm-predict {str(self.prepped_cfmid_file)}'
+            f' "cd /cfmid/public/; cfm-predict {self.prepped_cfmid_file}'
             f" {self.prune_probability} "
             f"/trained_models_cfmid4.0/[M+H]+/param_output.log"
             f" /trained_models_cfmid4.0/[M+H]+/param_config.txt 1"
-            f' {str(self.cfm_id_folder)}"'
+            f' {self.cfm_id_folder}"'
         )
         logger.debug(f"running docker with the following command:{command}")
         process = subprocess.Popen(

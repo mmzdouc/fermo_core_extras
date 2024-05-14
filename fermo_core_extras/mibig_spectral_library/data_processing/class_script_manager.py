@@ -26,11 +26,18 @@ import os
 from pathlib import Path
 from typing import Self
 
-from data_processing.class_cfmid_manager import CfmidManager
-from data_processing.class_logger import Logger
-from data_processing.class_postprocessing_manager import PostprocessingManager
-from data_processing.class_preprocessing_manager import PreprocessingManager
 from pydantic import BaseModel
+
+from fermo_core_extras.mibig_spectral_library.data_processing.class_cfmid_manager import (
+    CfmidManager,
+)
+from fermo_core_extras.mibig_spectral_library.data_processing.class_logger import Logger
+from fermo_core_extras.mibig_spectral_library.data_processing.class_postprocessing_manager import (
+    PostprocessingManager,
+)
+from fermo_core_extras.mibig_spectral_library.data_processing.class_preprocessing_manager import (
+    PreprocessingManager,
+)
 
 
 class LibraryPrep(BaseModel):

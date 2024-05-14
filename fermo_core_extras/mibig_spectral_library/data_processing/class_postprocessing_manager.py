@@ -86,13 +86,13 @@ class PostprocessingManager(BaseModel):
             return metabolite_name
 
         for file_name in file_list:
-            with open(file_name, "r") as file:
+            with open(file_name) as file:
                 lines = file.readlines()
                 metabolite = _subroutine(file_name)
                 for linenr in range(len(lines)):
                     if (
                         lines[linenr].startswith("#PMass")
-                        and metabolite in self.metadata.keys()
+                        and metabolite in self.metadata
                     ):
                         lines = (
                             lines[0 : linenr + 1]
@@ -110,7 +110,7 @@ class PostprocessingManager(BaseModel):
         """Formats the .log files in log_dict to an .mgf like format in
         preprocessed_mgf_list."""
 
-        for metabolite, lines in self.log_dict.items():
+        for _, lines in self.log_dict.items():
             new_lines = []
             for line in lines:
                 if not line.startswith("energy"):

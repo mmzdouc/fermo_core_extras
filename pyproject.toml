@@ -10,10 +10,6 @@ readme = "README.md"
 license = "LICENSE"
 repository = "https://github.com/mmzdouc/fermo_core_extras"
 keywords = ["cheminformatics", "metabolomics", "genomics", "openData"]
-exclude = [
-    ".flake8",
-    ".pre-commit-config.yaml",
-]
 
 [tool.poetry.dependencies]
 argparse = "1.4.0"
@@ -22,13 +18,13 @@ pandas = "2.0.3"
 pydantic = "2.5.2"
 python = "^3.11"
 
-
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
 isort = "^5.13.2"
-flake8 = "^7.0.0"
 pre-commit = "^3.7.1"
 pytest = "^8.2.0"
+ruff = "^0.4.4"
+mypy = "^1.10.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -56,3 +52,42 @@ exclude = '''
 
 [tool.isort]
 profile = "black"
+multi_line_output = 3
+line_length = 88
+include_trailing_comma = true
+reverse_relative = true
+
+[tool.mypy]
+
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+ignore = ["E203", "E501"]
+select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # flake8-eradicate/eradicate
+    "ERA",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # flake8-pie
+    "PIE",
+    # pygrep
+    "PGH",
+    # ruff checks
+    "RUF",
+    # flake8-simplify
+    "SIM",
+    # flake8-type-checking
+    "TCH",
+    # flake8-tidy-imports
+    "TID",
+    # pyupgrade
+    "UP",
+]

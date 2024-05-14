@@ -21,10 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
 from sys import argv
 
-from data_processing.class_parsing_manager import ParsingManager
-from data_processing.class_script_manager import LibraryPrep
+from fermo_core_extras.mibig_spectral_library.data_processing.class_parsing_manager import (
+    ParsingManager,
+)
+from fermo_core_extras.mibig_spectral_library.data_processing.class_script_manager import (
+    LibraryPrep,
+)
 
 
 def run_library_prep():
