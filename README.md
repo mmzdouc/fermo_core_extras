@@ -1,51 +1,57 @@
-# fermo_core_extras
-Collection of pre- and post-processing functionality for fermo_core
+# Fermo Core Extras
 
-Download, Installation
+Description
 ============
+A collection of pre-processing functionality intended to produce 
+files used by [fermo_core](github.com/mmzdouc/fermo_core). These modules are  
+independent of fermo_core. For detailed information, see the READMEs in the 
+individual subdirectories.
 
-- Create a virtual environment (e.g. with `conda`)
-- Install `python 3.11.4`
-- Install `fermo_core_extras` with `pip install -e .` (while in the `fermo_core_extras`
-  directory)
+Overview
+============
+The following modules are currently available in `fermo_core_extras`:
+- `mibig_spectral_library`: a module to create a MS/MS spectral library from entries 
+  of the MIBiG database: [README](fermo_core_extras/mibig_spectral_library/README_MIBIG_SPECTRAL_LIB.md)
 
-Additionally, `fermo_core_extas/mibig_spectral_library` requires:
-- An installed and active version of `docker`
+Prerequisites and Installation
+============
+- This project requires a Python installation of `3.11` or higher. See the 
+  individual READMEs for further specified prerequisites.
+- Install the project with the command `poetry install`
 
-Background
-==========
+Usage
+============
+See the individual READMEs for instructions on running them.
 
-`Fermo_core_extras/mibig_spectral_library` governs the creation a spectral library from the MIBiG database. For more information please see its respective [README_MIBIG_SPECTRAL_LIB.md](fermo_core_extras/mibig_spectral_library/README_MIBIG_SPECTRAL_LIB.md)
-
-For developers
-==============
-
-For guidelines regarding contributing to this project, see
-[CONTRIBUTING](CONTRIBUTING.md).
-
-Install development dependencies with `pip install -e '.[dev]'`.
-
-Several tools are used to keep code and style consistent.
-These tools include:
-- `black` (v23.3.0)
-- `flake8` (v6.0.0)
-
-We recommend using the package `pre-commit` to run these tools before committing.
-`pre-commit` can be installed with `pre-commit install`.
+Compatibility
+============
+The modules in this project are intended to be run on Linux command line and have 
+only been tested on Ubuntu Linux.
 
 About
 =====
 
-## Dependencies
-
-A list of dependencies can be found in the file [pyproject.toml](pyproject.toml).
-
-## License
-
-MIT license (see [LICENSE](LICENSE))
-
-Authors
-=======
+### Authors
 
 - Mitja M. Zdouc (Wageningen University)
 - Koen van Ingen (bachelor student Molecular Life Sciences at Wageningen University)
+
+### Dependencies
+
+A list of dependencies can be found in the file [pyproject.toml](pyproject.toml).
+
+### License
+
+MIT license (see [LICENSE](LICENSE))
+
+
+For developers
+==============
+
+### Contributing
+For guidelines regarding contributing to this project, see
+[CONTRIBUTING](CONTRIBUTING.md) and the [CODE OF CONDUCT](CODE_OF_CONDUCT.md).
+
+### Getting Started
+- Install development dependencies with `poetry install --with dev`
+- Initialize pre-commit with `poetry run pre-commit install`

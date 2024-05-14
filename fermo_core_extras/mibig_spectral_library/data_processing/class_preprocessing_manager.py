@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from pathlib import Path
 import json
-from typing import Self, Dict
+from pathlib import Path
+from typing import Dict, Self
 
 import pandas as pd
 from pydantic import BaseModel
@@ -59,32 +59,32 @@ class PreprocessingManager(BaseModel):
         with open(file_path) as file:
             complete_bgc_dict = json.load(file)
             for metabolite in complete_bgc_dict["cluster"]["compounds"]:
-                if "compound" in metabolite.keys():
+                if "compound" in metabolite:
                     metadata_table = [metabolite["compound"]]
                 else:
                     break
-                if "chem_struct" in metabolite.keys():
+                if "chem_struct" in metabolite:
                     metadata_table.append(metabolite["chem_struct"])
                 else:
                     break
-                if "molecular_formula" in metabolite.keys():
+                if "molecular_formula" in metabolite:
                     metadata_table.append(metabolite["molecular_formula"])
                 else:
                     metadata_table.append("")
-                if "mol_mass" in metabolite.keys():
+                if "mol_mass" in metabolite:
                     if int(metabolite["mol_mass"]) < self.mass_threshold:
                         metadata_table.append(metabolite["mol_mass"])
                     else:
                         continue
                 else:
                     metadata_table.append("")
-                if "database_id" in metabolite.keys():
+                if "database_id" in metabolite:
                     metadata_table.append(
                         str(metabolite["database_id"]).replace(" ", "")
                     )
                 else:
                     metadata_table.append("")
-                if metabolite["compound"] in self.bgc_dict.keys():
+                if metabolite["compound"] in self.bgc_dict:
                     metadata_table.append(
                         complete_bgc_dict["cluster"]["mibig_accession"]
                         + ","

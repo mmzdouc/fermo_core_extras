@@ -22,16 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Self
 import os
 from pathlib import Path
+from typing import Self
 
 from pydantic import BaseModel
 
-from data_processing.class_cfmid_manager import CfmidManager
-from data_processing.class_preprocessing_manager import PreprocessingManager
-from data_processing.class_postprocessing_manager import PostprocessingManager
-from data_processing.class_logger import Logger
+from fermo_core_extras.mibig_spectral_library.data_processing.class_cfmid_manager import (
+    CfmidManager,
+)
+from fermo_core_extras.mibig_spectral_library.data_processing.class_logger import Logger
+from fermo_core_extras.mibig_spectral_library.data_processing.class_postprocessing_manager import (
+    PostprocessingManager,
+)
+from fermo_core_extras.mibig_spectral_library.data_processing.class_preprocessing_manager import (
+    PreprocessingManager,
+)
 
 
 class LibraryPrep(BaseModel):
