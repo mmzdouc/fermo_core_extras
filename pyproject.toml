@@ -11,6 +11,7 @@ license = "LICENSE"
 repository = "https://github.com/mmzdouc/fermo_core_extras"
 keywords = ["cheminformatics", "metabolomics", "genomics", "openData"]
 
+
 [tool.poetry.dependencies]
 argparse = "1.4.0"
 coloredlogs = "15.0.1"
@@ -18,20 +19,23 @@ pandas = "2.0.3"
 pydantic = "2.5.2"
 python = "^3.11"
 
+
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
 isort = "^5.13.2"
 pre-commit = "^3.7.1"
 pytest = "^8.2.0"
 ruff = "^0.4.4"
-mypy = "^1.10.0"
+
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+
 [options.packages.find]
 where = "fermo_core_extras"
+
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -39,6 +43,7 @@ addopts = "-ra -q"
 testpaths = [
     "tests",
 ]
+
 
 [tool.black]
 line-length = 88
@@ -50,6 +55,7 @@ exclude = '''
 )/
 '''
 
+
 [tool.isort]
 profile = "black"
 multi_line_output = 3
@@ -57,11 +63,10 @@ line_length = 88
 include_trailing_comma = true
 reverse_relative = true
 
-[tool.mypy]
-
 
 [tool.ruff]
 line-length = 88
+
 
 [tool.ruff.lint]
 ignore = ["E203", "E501"]
