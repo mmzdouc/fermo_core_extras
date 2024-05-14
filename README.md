@@ -1,5 +1,10 @@
 # Fermo Core Extras
 
+
+
+[![DOI](https://zenodo.org/badge/766056239.svg)](https://zenodo.org/doi/10.5281/zenodo.11193478)
+
+
 Description
 ============
 A collection of pre-processing functionality intended to produce 
