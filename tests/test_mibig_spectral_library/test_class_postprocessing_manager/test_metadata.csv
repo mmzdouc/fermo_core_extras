@@ -1,0 +1,3 @@
+metabolite_name SMILES chemical_formula molecular_mass database_IDs MIBiG_entry_ID
+abyssomicin_C CC1C[C@]23OC(=O)C4=C2OC1C(O)C3\C=C/C(=O)[C@@H](C)C[C@@H](C)C4=O C19H22O6 346.141638424 ['npatlas:NPA01961','pubchem:71455791','chembl:CHEMBL1651097'] BGC0000001
+(+)-O-methylkolavelool C[C@H]1CC[C@]2([C@H]([C@]1(C)CCC(C)(C=C)OC)CCC=C2C)C C21H36O 304.276615772 ['pubchem:102335044'] BGC0001198
