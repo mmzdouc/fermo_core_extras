@@ -6,7 +6,7 @@ Module for the preparation of an MS/MS in silico spectral library from the MIBiG
 database. While this spectral library is intended to be used within the context of 
 the knownclusterblast-matching module of `fermo_core`, it can be also used in any 
 spectral library matching context. This module has been developed in the scope of a 
-bachelor thesis by Koen van Ingen, which can be found [here](https://docs.google.com/document/d/1xI45phm3QL6TreeioFiGqSCpSK543esEdKW_mCkF4Ww/edit?usp=sharing).
+bachelor thesis by Koen van Ingen.
 
 
 Prerequisites
